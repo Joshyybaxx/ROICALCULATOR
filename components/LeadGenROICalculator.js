@@ -20,6 +20,15 @@ export default function LeadGenROICalculator() {
     setInputs({ ...inputs, [e.target.name]: parseFloat(e.target.value) })
   }
 
+  const labels = {
+    serviceFeeA: "Monthly Retainer (Traditional Setup)",
+    installFeeB: "One-Time Setup Fee (Your Model)",
+    adSpendDaily: "Daily Ad Budget",
+    leadCost: "Average Cost per Lead",
+    leadsPerDeal: "Leads Needed to Win a Listing",
+    dealValue: "GCI per Listing ($)"
+  }
+
   const calculate = () => {
     const months = 12
     const adSpendMonthly = inputs.adSpendDaily * 30
@@ -50,15 +59,18 @@ export default function LeadGenROICalculator() {
     <Card className="max-w-2xl mx-auto p-4">
       <CardContent>
         <h2 className="text-xl font-bold mb-4">Lead Gen ROI Calculator</h2>
+
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(inputs).map(([key, value]) => (
             <div key={key}>
-              <Label className="capitalize">{key.replace(/([A-Z])/g, ' $1')}</Label>
+              <Label className="capitalize">{labels[key]}</Label>
               <Input type="number" name={key} value={value} onChange={handleChange} />
             </div>
           ))}
         </div>
+
         <Button className="mt-4" onClick={calculate}>Calculate</Button>
+
         {results && (
           <div className="mt-6 grid grid-cols-2 gap-4">
             {Object.entries(results).map(([option, data]) => (
